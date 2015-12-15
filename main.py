@@ -66,3 +66,17 @@ def distance(start, end):
     dist = RADIUS * central_angle
     return dist
 
+
+def print_cities():
+    url = "https://gist.githubusercontent.com/mwtorkowski/16ca26a0c072ef743734/raw/2aa20e8de9f2292d58a4856602c1f0634d8611a7/cities.json"
+    cities = read_cities(url)
+    dublin = {'lat': 53.333, 'lon': -6.267}
+
+    nearby_cities = [cities[city_key]['city'] for city_key in cities.keys() if distance(cities[city_key], dublin) < 500 and city_key != 'dublin']
+
+    nearby_cities.sort()
+    for city in nearby_cities:
+        print city
+
+
+print_cities()
