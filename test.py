@@ -16,7 +16,7 @@ class TestReader(unittest.TestCase):
     format_url = ""
 
     def test_read_empty(self):
-        self.assertEqual(len(read_cities()), 0)
+        self.assertIsNone(read_cities(self.format_url))
 
     def test_read_empty_list(self):
         self.assertEqual(len(read_cities(self.empty_url)), 0)

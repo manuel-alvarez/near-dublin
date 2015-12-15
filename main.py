@@ -1,3 +1,7 @@
+import json
+import urllib2
+
+
 def read_cities(url=""):
     """
     This method reads cities from a given url and stores them in a dictionary of cities when each one of them will have
@@ -6,8 +10,15 @@ def read_cities(url=""):
     :return: dictionary. A hash with the cities and their data. If there's any error, this method returns None, and an
     empty dict if list is empty.
     """
-    return {}
+    try:
+        response = urllib2.urlopen(url)
+    except ValueError as e:  # Bad url
+        print "Error while reading url: %s" % e.message
+        return None
 
+    raw_data = response.read()
+    data = json.loads(raw_data)
+    return data
 
 def distance(start, end):
     """
