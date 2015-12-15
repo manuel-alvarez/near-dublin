@@ -10,14 +10,23 @@ def read_cities(url=""):
     :return: dictionary. A hash with the cities and their data. If there's any error, this method returns None, and an
     empty dict if list is empty.
     """
+    if url == "":
+        print "URL Shouln't be emtpy string"
+        return None
+
     try:
         response = urllib2.urlopen(url)
-    except ValueError as e:  # Bad url
+    except (urllib2.HTTPError, ValueError) as e:  # Bad url
         print "Error while reading url: %s" % e.message
         return None
 
     raw_data = response.read()
-    data = json.loads(raw_data)
+    try:
+        data = json.loads(raw_data)
+    except ValueError as e:
+        print "Source file is not well formatted: %s" % e.message
+        return None
+
     return data
 
 def distance(start, end):
