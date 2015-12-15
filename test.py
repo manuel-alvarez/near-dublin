@@ -40,6 +40,8 @@ class TestDistance(unittest.TestCase):
     point_d = {'lon': 230.0}
     point_e = 0
     point_f = 'This is not a point'
+    point_g = {'lat': 53.333, 'lon': -6.267}  # Dublin
+    point_h = {'lat': 51.509, 'lon': -0.126}  # London
 
     def test_near(self):
         dist = distance(self.point_a, self.point_b)
@@ -60,3 +62,9 @@ class TestDistance(unittest.TestCase):
         self.assertIsNone(distance(self.point_e, self.point_a), "Distance should not be valid")
         self.assertIsNone(distance(self.point_a, self.point_f), "Distance should not be valid")
         self.assertIsNone(distance(self.point_f, self.point_a), "Distance should not be valid")
+
+    def test_almost(self):
+        dist = distance(self.point_g, self.point_h)
+        self.assertLess(dist, 500, "Distance should be less than 500km")
+        self.assertGreater(dist, 400, "Distance should be greater than 400km")
+
